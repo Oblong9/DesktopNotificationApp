@@ -5,6 +5,8 @@ from tkinter import ttk
 import tkinter as tk
 import tkinter.messagebox
 import time
+import datetime
+import threading
 
 class MainApp(tk.Tk):
     def __init__(self):
@@ -40,6 +42,8 @@ class MainApp(tk.Tk):
         height = 2, width = 10, bd = 0, highlightthickness = 0)
         self.closeApp.pack(side = BOTTOM, pady = 20)
         self.closeApp['command'] = self.quit
+
+        self.protocol("WM_DELETE_WINDOW", self.iconify)
 
     # Reminder class to create reminder
     class ReminderApp(tk.Tk):
@@ -79,7 +83,12 @@ class MainApp(tk.Tk):
         # Get the input from reminder text
         def retrieve_reminder(self):
             inputValue=reminderTxt.get("1.0","end-1c")
-            return inputValue
+            
+            if(inputValue == ''):
+                inputValue = "DEFAULT_REMINDER"
+                return inputValue
+            else:
+                return inputValue
 
         # Get the input from timer text
         def retrieve_time(self):
@@ -90,7 +99,6 @@ class MainApp(tk.Tk):
                 self.destroy()
                 showwarning(title = "Error", message = "You must enter a number")
                 raise Exception("You must enter a number")
-                    
             else:
                 timeFloat = float(inputValue)
                 type(timeFloat)
@@ -100,7 +108,7 @@ class MainApp(tk.Tk):
                     showwarning(title = "Error", message = "You must enter a number greater than 0")
                     raise ValueError("You must enter a number greater than 0")
                 else:
-                    print("Time set is to", inputValue, "minutes")
+                    print("Timer set is to", inputValue, "minutes")
                     return timeFloat
 
         # Function to set reminders
@@ -111,20 +119,24 @@ class MainApp(tk.Tk):
             notification.notify(
             title = "REMINDER",
             message = "Reminder set!",
-            timeout = 1
+            timeout = 5
             )
+
+            def secondNotif():
+                notification.notify(
+                title = "REMINDER",
+                message = reminder,
+                timeout = 10
+                )
+                print(time.strftime("%H:%M:%S", time.localtime()))
+                print("TIMER OFF")
 
             showinfo(title = "Reminder", message = "Reminder set!")
             self.destroy()
 
-            time.sleep(timer * 60)
-            notification.notify(
-            title = "REMINDER",
-            message = reminder,
-            timeout = 10
-            )
-            print("TIMER OFF")
-                        
+            print(time.strftime("%H:%M:%S", time.localtime()))
+            threading.Timer(timer * 60, secondNotif).start()
+                            
 
     class ToDo(tk.Tk):
         def __init__(self):
