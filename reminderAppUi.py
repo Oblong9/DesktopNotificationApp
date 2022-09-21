@@ -21,29 +21,32 @@ class MainApp(tk.Tk):
         y = (screen_height/2) - (winHeight/2)
         self.title("To-Do/Reminder App")
         self.geometry("%dx%d" % (winWidth, winHeight))
-        self["background"] = '#49BEAA'
+        self["background"] = '#44E5E7'
 
-        lbl = Label(self, text = "To-Do/Reminder App", fg = "black", bg = "#49BEAA", font = ("Fira Sans", 40))
+        lbl = Label(self, text = "To-Do/Reminder App", fg = "black", bg = "#44E5E7", font = ("Fira Sans", 40))
         lbl.pack(side = TOP, pady = 5)
 
         # Buttons to access new windows
-        self.toDoList = Button(self, text = "Open To-Do List", font = ("Fira Sans, Thin", 16), fg = "black", bg = "#3C91E6", 
+        self.toDoList = Button(self, text = "Open To-Do List", font = ("Fira Sans, Thin", 16), fg = "black", bg = "#1E96FC", 
         height = 13, width = 20, activebackground = "#5EFC8D", highlightthickness = 0, borderwidth = 1)
-
+        self.toDoList['command'] = self.ToDo
         self.toDoList.place(relx = 0.25, rely = 0.5, anchor = CENTER)
 
-        self.reminders = Button(self, text = "Reminders", font = ("Fira Sans, Thin", 16), fg = "black", bg = "#3C91E6", 
+        self.reminders = Button(self, text = "Reminders", font = ("Fira Sans, Thin", 16), fg = "black", bg = "#1E96FC", 
         height = 13, width = 20, activebackground = "#5EFC8D", highlightthickness = 0, borderwidth = 1)
-
         self.reminders['command'] = self.ReminderApp
         self.reminders.place(relx = 0.75, rely = 0.5, anchor = CENTER)
+
+        
 
         self.closeApp = Button(self, text = "Close",  font = ("Fira Sans, Thin", 12), bg = "#EF767A", activebackground = "#5EFC8D", 
         height = 2, width = 10, bd = 0, highlightthickness = 0)
         self.closeApp.pack(side = BOTTOM, pady = 20)
         self.closeApp['command'] = self.quit
+    
 
         self.protocol("WM_DELETE_WINDOW", self.iconify)
+
 
     # Reminder class to create reminder
     class ReminderApp(tk.Tk):
@@ -55,28 +58,28 @@ class MainApp(tk.Tk):
 
             self.geometry('600x400')
             self.title("Reminder App")
-            self["background"] = '#49BEAA'
+            self["background"] = '#FAFF81'
 
-            lbl = Label(self, text = "Reminder App", fg = "black", bg = "#49BEAA", font = ("Fira Sans", 30))
+            lbl = Label(self, text = "Reminder App", fg = "black", bg = "#FAFF81", font = ("Fira Sans", 30))
             lbl.pack(side = TOP, pady = 5)
 
             # Set reminder to give a message after
-            lbl = Label(self, text = "Reminder:", bg = "#49BEAA", font = ("Fira Sans, Thin", 20))
+            lbl = Label(self, text = "Reminder:", bg = "#FAFF81", font = ("Fira Sans, Thin", 20))
             lbl.place(relx = 0.25, rely = 0.44, anchor = CENTER)
             reminderTxt = Text(self, bg = "white", height = 1, width = 15, font = ("Fira Sans, Thin", 14), bd = 0)
             reminderTxt.place(relx = 0.25, rely = 0.5, anchor = CENTER)
 
-            lbl = Label(self, text = "in", bg = "#49BEAA", font = ("Fira Sans, Thin", 18))
+            lbl = Label(self, text = "in", bg = "#FAFF81", font = ("Fira Sans, Thin", 18))
             lbl.place(relx = 0.5, rely = 0.5, anchor = CENTER)
 
             # Set reminder to go off at a certain time
-            lbl = Label(self, text = "Time (minutes):", bg = "#49BEAA", font = ("Fira Sans, Thin", 18))
+            lbl = Label(self, text = "Time(minutes):", bg = "#FAFF81", font = ("Fira Sans, Thin", 18))
             lbl.place(relx = 0.72, rely = 0.44, anchor = CENTER)
             timeTxt = Text(self, bg = "white", height = 1, width = 7, font = ("Fira Sans, Thin", 14), bd = 0)
             timeTxt.place(relx = 0.72, rely = 0.5, anchor = CENTER)
 
             # Close the whole app
-            self.button = Button(self, text = "Set Reminder",  font = ("Fira Sans, Thin", 16), bg = "#3C91E6", activebackground = "#5EFC8D", bd = 0, highlightthickness = 0)
+            self.button = Button(self, text = "Set Reminder",  font = ("Fira Sans, Thin", 16), bg = "#1E96FC", activebackground = "#5EFC8D", bd = 0, highlightthickness = 0)
             self.button['command'] = self.set_reminder
             self.button.place(relx = 0.5, rely = 0.75, anchor = CENTER)
 
@@ -135,7 +138,7 @@ class MainApp(tk.Tk):
             self.destroy()
 
             print(time.strftime("%H:%M:%S", time.localtime()))
-            threading.Timer(timer * 60, secondNotif).start()
+            threading.Timer(timer, secondNotif).start()
                             
 
     class ToDo(tk.Tk):
