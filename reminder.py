@@ -31,5 +31,4 @@ while True:
     schedule.run_pending()
     time.sleep(1)
 
-# Connect to weather api to send reminders of weahter changes/storms
 # Desktop notification for class start times
