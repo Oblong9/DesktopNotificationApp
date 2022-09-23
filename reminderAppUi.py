@@ -13,7 +13,7 @@ class MainApp(tk.Tk):
         super().__init__()
 
          # Window parameters
-        winWidth = 1000
+        winWidth = 600
         winHeight = 600
         screen_width = self.winfo_screenwidth()
         screen_height = self.winfo_screenheight()
@@ -23,19 +23,13 @@ class MainApp(tk.Tk):
         self.geometry("%dx%d" % (winWidth, winHeight))
         self["background"] = '#44E5E7'
 
-        lbl = Label(self, text = "To-Do/Reminder App", fg = "black", bg = "#44E5E7", font = ("Fira Sans", 40))
+        lbl = Label(self, text = "Reminder App", fg = "black", bg = "#44E5E7", font = ("Fira Sans", 40))
         lbl.pack(side = TOP, pady = 5)
 
-        # Buttons to access new windows
-        self.toDoList = Button(self, text = "Open To-Do List", font = ("Fira Sans, Thin", 16), fg = "black", bg = "#1E96FC", 
-        height = 13, width = 20, activebackground = "#5EFC8D", highlightthickness = 0, borderwidth = 1)
-        self.toDoList['command'] = self.ToDo
-        self.toDoList.place(relx = 0.25, rely = 0.5, anchor = CENTER)
-
-        self.reminders = Button(self, text = "Reminders", font = ("Fira Sans, Thin", 16), fg = "black", bg = "#1E96FC", 
+        self.reminders = Button(self, text = "Create Reminder", font = ("Fira Sans, Thin", 16), fg = "black", bg = "#1E96FC", 
         height = 13, width = 20, activebackground = "#5EFC8D", highlightthickness = 0, borderwidth = 1)
         self.reminders['command'] = self.ReminderApp
-        self.reminders.place(relx = 0.75, rely = 0.5, anchor = CENTER)
+        self.reminders.place(relx = .5, rely = 0.5, anchor = CENTER)
 
         
 
@@ -138,30 +132,12 @@ class MainApp(tk.Tk):
             self.destroy()
 
             print(time.strftime("%H:%M:%S", time.localtime()))
-            threading.Timer(timer, secondNotif).start()
+            threading.Timer(timer * 60, secondNotif).start()
                             
-
-    class ToDo(tk.Tk):
-        def __init__(self):
-            super().__init__()
-
-            self.geometry('600x400')
-            self.title("To-Do App")
-            self["background"] = '#EFD09E'
 
 if __name__ == "__main__":
 
     main = MainApp()
     mainloop()
 
-# root=Tk()
-
-# textBox=Text(root, height=2, width=10)
-# textBox.pack()
-# buttonCommit=Button(root, height=1, width=10, text="Commit", 
-#                     command=lambda: retrieve_input())
-#command=lambda: retrieve_input() >>> just means do this when i press the button
-# buttonCommit.pack()
-
-# mainloop()
 
